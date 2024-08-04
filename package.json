@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "A discord music bot that works with youtube",
   "scripts": {
-    "prepare": "husky"
+    "prepare": "husky",
+    "start": "tsx src/index.ts",
+    "dev": "tsx --watch src/index.ts"
   },
   "author": "SomeRandomNiko",
   "license": "MIT",
