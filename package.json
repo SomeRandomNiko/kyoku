@@ -9,9 +9,13 @@
   "license": "MIT",
   "packageManager": "pnpm@9.6.0+sha256.dae0f7e822c56b20979bb5965e3b73b8bdabb6b8b8ef121da6d857508599ca35",
   "devDependencies": {
+    "@types/node": "^22.1.0",
+    "dotenv": "^16.4.5",
     "husky": "^9.1.4",
     "lint-staged": "^15.2.8",
-    "prettier": "^3.3.3"
+    "prettier": "^3.3.3",
+    "tsx": "^4.16.5",
+    "typescript": "^5.5.4"
   },
   "lint-staged": {
     "*.{js,ts,json,md,yml,yaml}": "prettier --write"
