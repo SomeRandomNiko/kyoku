@@ -17,6 +17,9 @@ importers:
       "@types/node":
         specifier: ^22.1.0
         version: 22.1.0
+      discord-api-types:
+        specifier: ^0.37.93
+        version: 0.37.93
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
@@ -44,6 +47,9 @@ importers:
       typescript-eslint:
         specifier: ^8.0.0
         version: 8.0.0(eslint@9.8.0)(typescript@5.5.4)
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
 
 packages:
   "@discordjs/builders@1.8.2":
@@ -533,6 +539,10 @@ packages:
   discord-api-types@0.37.83:
     resolution:
       { integrity: sha512-urGGYeWtWNYMKnYlZnOnDHm8fVRffQs3U0SpE8RHeiuLKb/u92APS8HoQnPTFbnXmY1vVnXjXO4dOxcAn3J+DA== }
+
+  discord-api-types@0.37.93:
+    resolution:
+      { integrity: sha512-M5jn0x3bcXk8EI2c6F6V6LeOWq10B/cJf+YJSyqNmg7z4bdXK+Z7g9zGJwHS0h9Bfgs0nun2LQISFOzwck7G9A== }
 
   discord.js@14.15.3:
     resolution:
@@ -1180,6 +1190,10 @@ packages:
       { integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q== }
     engines: { node: ">=10" }
 
+  zod@3.23.8:
+    resolution:
+      { integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g== }
+
 snapshots:
   "@discordjs/builders@1.8.2":
     dependencies:
@@ -1539,6 +1553,8 @@ snapshots:
       path-type: 4.0.0
 
   discord-api-types@0.37.83: {}
+
+  discord-api-types@0.37.93: {}
 
   discord.js@14.15.3:
     dependencies:
@@ -2048,3 +2064,5 @@ snapshots:
   yaml@2.5.0: {}
 
   yocto-queue@0.1.0: {}
+
+  zod@3.23.8: {}

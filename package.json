@@ -14,11 +14,13 @@
     "prepare": "husky",
     "start": "tsx src/index.ts",
     "dev": "tsx --watch src/index.ts",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "register": "tsx src/register.ts"
   },
   "devDependencies": {
     "@eslint/js": "^9.8.0",
     "@types/node": "^22.1.0",
+    "discord-api-types": "^0.37.93",
     "dotenv": "^16.4.5",
     "eslint": "~9.8.0",
     "globals": "^15.9.0",
@@ -27,7 +29,8 @@
     "prettier": "^3.3.3",
     "tsx": "^4.16.5",
     "typescript": "^5.5.4",
-    "typescript-eslint": "^8.0.0"
+    "typescript-eslint": "^8.0.0",
+    "zod": "^3.23.8"
   },
   "dependencies": {
     "discord.js": "^14.15.3"
