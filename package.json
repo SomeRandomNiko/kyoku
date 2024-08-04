@@ -2,14 +2,19 @@
   "name": "kyoku",
   "version": "1.0.0",
   "description": "A discord music bot that works with youtube",
+  "author": "SomeRandomNiko",
+  "license": "MIT",
+  "packageManager": "pnpm@9.6.0+sha256.dae0f7e822c56b20979bb5965e3b73b8bdabb6b8b8ef121da6d857508599ca35",
+  "main": "src/index.ts",
+  "lint-staged": {
+    "*.{js,ts,json,md,yml,yaml}": "prettier --write"
+  },
+  "type": "module",
   "scripts": {
     "prepare": "husky",
     "start": "tsx src/index.ts",
     "dev": "tsx --watch src/index.ts"
   },
-  "author": "SomeRandomNiko",
-  "license": "MIT",
-  "packageManager": "pnpm@9.6.0+sha256.dae0f7e822c56b20979bb5965e3b73b8bdabb6b8b8ef121da6d857508599ca35",
   "devDependencies": {
     "@types/node": "^22.1.0",
     "dotenv": "^16.4.5",
@@ -19,7 +24,7 @@
     "tsx": "^4.16.5",
     "typescript": "^5.5.4"
   },
-  "lint-staged": {
-    "*.{js,ts,json,md,yml,yaml}": "prettier --write"
+  "dependencies": {
+    "discord.js": "^14.15.3"
   }
 }
