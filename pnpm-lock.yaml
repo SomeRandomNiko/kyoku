@@ -7,6 +7,9 @@ settings:
 importers:
   .:
     dependencies:
+      "@distube/ytdl-core":
+        specifier: ^4.14.3
+        version: 4.14.3
       discord.js:
         specifier: ^14.15.3
         version: 14.15.3
@@ -86,6 +89,11 @@ packages:
     resolution:
       { integrity: sha512-PZ+vLpxGCRtmr2RMkqh8Zp+BenUaJqlS6xhgWKEZcgC/vfHLEzpHtKkB0sl3nZWpwtcKk6YWy+pU3okL2I97FA== }
     engines: { node: ">=16.11.0" }
+
+  "@distube/ytdl-core@4.14.3":
+    resolution:
+      { integrity: sha512-z6i5EVGEuKhuvuRNyIqafBSs5aRA28HssnWehCRhEtYrxeFgXImfmpKTjUusHYU5vQt1swSVPVb2JCd22P0CPA== }
+    engines: { node: ">=14.0" }
 
   "@esbuild/aix-ppc64@0.21.5":
     resolution:
@@ -280,6 +288,11 @@ packages:
       { integrity: sha512-BsWiH1yFGjXXS2yvrf5LyuoSIIbPrGUWob917o+BTKuZ7qJdxX8aJLRxs1fS9n6r7vESrq1OUqb68dANcFXuQQ== }
     engines: { node: ^18.18.0 || ^20.9.0 || >=21.1.0 }
 
+  "@fastify/busboy@2.1.1":
+    resolution:
+      { integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA== }
+    engines: { node: ">=14" }
+
   "@humanwhocodes/module-importer@1.0.1":
     resolution:
       { integrity: sha512-bxveV4V8v5Yb4ncFTT3rPSgZBOpCkjfK0y4oVVVJwIuDVBRMDXrPyXRL988i5ap9m9bnyEEjWfm5WkBmtffLfA== }
@@ -409,6 +422,11 @@ packages:
       { integrity: sha512-tcpGyI9zbizT9JbV6oYE477V6mTlXvvi0T0G3SNIYE2apm/G5huBa1+K89VGeovbg+jycCrfhl3ADxErOuO6Jg== }
     engines: { node: ">=0.4.0" }
     hasBin: true
+
+  agent-base@7.1.1:
+    resolution:
+      { integrity: sha512-H0TSyFNDMomMNJQBn8wFV5YC/2eJ+VXECwOadZJT554xP6cODZHPX3H9QMQECxvrgiSOP1pHjy1sMWQVYJOUOA== }
+    engines: { node: ">= 14" }
 
   ajv@6.12.6:
     resolution:
@@ -728,6 +746,17 @@ packages:
       { integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ== }
     engines: { node: ">=8" }
 
+  http-cookie-agent@6.0.5:
+    resolution:
+      { integrity: sha512-sfZ8fDgDP3B1YB+teqSnAK1aPgBu8reUUGxSsndP2XnYN6cM29EURXWXZqQQiaRdor3B4QjpkUNfv21syaO4DA== }
+    engines: { node: ">=18.0.0" }
+    peerDependencies:
+      tough-cookie: ^4.0.0
+      undici: ^5.11.0 || ^6.0.0
+    peerDependenciesMeta:
+      undici:
+        optional: true
+
   human-signals@5.0.0:
     resolution:
       { integrity: sha512-AXcZb6vzzrFAUE61HnN4mpLqd/cSIwNQjtNWR0euPm6y0iqx3G4gOXaIDdtdDwZmhwe82LA6+zinmW4UBWVePQ== }
@@ -857,6 +886,11 @@ packages:
       { integrity: sha512-9ie8ItPR6tjY5uYJh8K/Zrv/RMZ5VOlOWvtZdEHYSTFKZfIBPQa9tOAEeAWhd+AnIneLJ22w5fjOYtoutpWq5w== }
     engines: { node: ">=18" }
 
+  m3u8stream@0.8.6:
+    resolution:
+      { integrity: sha512-LZj8kIVf9KCphiHmH7sbFQTVe4tOemb202fWwvJwR9W5ENW/1hxJN6ksAWGhQgSBSa3jyWhnjKU1Fw1GaOdbyA== }
+    engines: { node: ">=12" }
+
   magic-bytes.js@1.10.0:
     resolution:
       { integrity: sha512-/k20Lg2q8LE5xiaaSkMXk4sfvI+9EGEykFS4b0CHHGWqDYU0bGUFSwchNOMA56D7TCs9GwVTkqe9als1/ns8UQ== }
@@ -884,6 +918,11 @@ packages:
     resolution:
       { integrity: sha512-VP79XUPxV2CigYP3jWwAUFSku2aKqBH7uTAapFWCBqutsbmDo96KY5o8uh6U+/YSIn5OxJnXp73beVkpqMIGhA== }
     engines: { node: ">=18" }
+
+  miniget@4.2.3:
+    resolution:
+      { integrity: sha512-SjbDPDICJ1zT+ZvQwK0hUcRY4wxlhhNpHL9nJOB2MEAXRGagTljsO8MEDzQMTFf0Q8g4QNi8P9lEm/g7e+qgzA== }
+    engines: { node: ">=12" }
 
   minimatch@3.1.2:
     resolution:
@@ -979,14 +1018,26 @@ packages:
     engines: { node: ">=14" }
     hasBin: true
 
+  psl@1.9.0:
+    resolution:
+      { integrity: sha512-E/ZsdU4HLs/68gYzgGTkMicWTLPdAftJLfJFlLUAAKZGkStNU72sZjT66SnMDVOfOWY/YAoiD7Jxa9iHvngcag== }
+
   punycode@2.3.1:
     resolution:
       { integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg== }
     engines: { node: ">=6" }
 
+  querystringify@2.2.0:
+    resolution:
+      { integrity: sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ== }
+
   queue-microtask@1.2.3:
     resolution:
       { integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A== }
+
+  requires-port@1.0.0:
+    resolution:
+      { integrity: sha512-KigOCHcocU3XODJxsu8i/j8T9tzT4adHiecwORRQ0ZZFcp7ahwXuRU1m+yuO90C5ZUyGeGfocHDI14M3L3yDAQ== }
 
   resolve-from@4.0.0:
     resolution:
@@ -1014,6 +1065,10 @@ packages:
   run-parallel@1.2.0:
     resolution:
       { integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA== }
+
+  sax@1.4.1:
+    resolution:
+      { integrity: sha512-+aWOz7yVScEGoKNd4PA10LZ8sk0A/z5+nXQG5giUO5rprX9jgYsTdov9qCchZiPIZezbZH+jRut8nPodFAX4Jg== }
 
   semver@7.6.3:
     resolution:
@@ -1095,6 +1150,11 @@ packages:
       { integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ== }
     engines: { node: ">=8.0" }
 
+  tough-cookie@4.1.4:
+    resolution:
+      { integrity: sha512-Loo5UUvLD9ScZ6jh8beX1T6sO1w2/MpCRpEP7V280GKMVUQ0Jzar2U3UJPsrdbziLEMMhu3Ujnq//rhiFuIeag== }
+    engines: { node: ">=6" }
+
   ts-api-utils@1.3.0:
     resolution:
       { integrity: sha512-UQMIo7pb8WRomKR1/+MFVLTroIvDVtMX3K6OUir8ynLyzB8Jeriont2bTAtmNPa1ekAgN7YPDyf6V+ygrdU+eQ== }
@@ -1141,14 +1201,28 @@ packages:
     resolution:
       { integrity: sha512-xtFJHudx8S2DSoujjMd1WeWvn7KKWFRESZTMeL1RptAYERu29D6jphMjjY+vn96jvN3kVPDNxU/E13VTaXj6jg== }
 
+  undici@5.28.4:
+    resolution:
+      { integrity: sha512-72RFADWFqKmUb2hmmvNODKL3p9hcB6Gt2DOQMis1SEBaV6a4MH8soBvzg+95CYhCKPFedut2JY9bMfrDl9D23g== }
+    engines: { node: ">=14.0" }
+
   undici@6.13.0:
     resolution:
       { integrity: sha512-Q2rtqmZWrbP8nePMq7mOJIN98M0fYvSgV89vwl/BQRT4mDOeY2GXZngfGpcBBhtky3woM7G24wZV3Q304Bv6cw== }
     engines: { node: ">=18.0" }
 
+  universalify@0.2.0:
+    resolution:
+      { integrity: sha512-CJ1QgKmNg3CwvAv/kOFmtnEN05f0D/cn9QntgNOQlQF9dgvVTHj3t+8JPdjqawCHk7V/KA+fbUqzZ9XWhcqPUg== }
+    engines: { node: ">= 4.0.0" }
+
   uri-js@4.4.1:
     resolution:
       { integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg== }
+
+  url-parse@1.5.10:
+    resolution:
+      { integrity: sha512-WypcfiRhfeUP9vvF0j6rw0J3hrWrw6iZv3+22h6iRMJ/8z1Tj6XfLP4DsUix5MhMPnXpiHDoKyoZ/bdCkwBCiQ== }
 
   which@2.0.2:
     resolution:
@@ -1241,6 +1315,17 @@ snapshots:
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
+
+  "@distube/ytdl-core@4.14.3":
+    dependencies:
+      http-cookie-agent: 6.0.5(tough-cookie@4.1.4)(undici@5.28.4)
+      m3u8stream: 0.8.6
+      miniget: 4.2.3
+      sax: 1.4.1
+      tough-cookie: 4.1.4
+      undici: 5.28.4
+    transitivePeerDependencies:
+      - supports-color
 
   "@esbuild/aix-ppc64@0.21.5":
     optional: true
@@ -1343,6 +1428,8 @@ snapshots:
   "@eslint/js@9.8.0": {}
 
   "@eslint/object-schema@2.1.4": {}
+
+  "@fastify/busboy@2.1.1": {}
 
   "@humanwhocodes/module-importer@1.0.1": {}
 
@@ -1465,6 +1552,12 @@ snapshots:
       acorn: 8.12.1
 
   acorn@8.12.1: {}
+
+  agent-base@7.1.1:
+    dependencies:
+      debug: 4.3.6
+    transitivePeerDependencies:
+      - supports-color
 
   ajv@6.12.6:
     dependencies:
@@ -1762,6 +1855,15 @@ snapshots:
 
   has-flag@4.0.0: {}
 
+  http-cookie-agent@6.0.5(tough-cookie@4.1.4)(undici@5.28.4):
+    dependencies:
+      agent-base: 7.1.1
+      tough-cookie: 4.1.4
+    optionalDependencies:
+      undici: 5.28.4
+    transitivePeerDependencies:
+      - supports-color
+
   human-signals@5.0.0: {}
 
   husky@9.1.4: {}
@@ -1858,6 +1960,11 @@ snapshots:
       strip-ansi: 7.1.0
       wrap-ansi: 9.0.0
 
+  m3u8stream@0.8.6:
+    dependencies:
+      miniget: 4.2.3
+      sax: 1.4.1
+
   magic-bytes.js@1.10.0: {}
 
   merge-stream@2.0.0: {}
@@ -1872,6 +1979,8 @@ snapshots:
   mimic-fn@4.0.0: {}
 
   mimic-function@5.0.1: {}
+
+  miniget@4.2.3: {}
 
   minimatch@3.1.2:
     dependencies:
@@ -1934,9 +2043,15 @@ snapshots:
 
   prettier@3.3.3: {}
 
+  psl@1.9.0: {}
+
   punycode@2.3.1: {}
 
+  querystringify@2.2.0: {}
+
   queue-microtask@1.2.3: {}
+
+  requires-port@1.0.0: {}
 
   resolve-from@4.0.0: {}
 
@@ -1954,6 +2069,8 @@ snapshots:
   run-parallel@1.2.0:
     dependencies:
       queue-microtask: 1.2.3
+
+  sax@1.4.1: {}
 
   semver@7.6.3: {}
 
@@ -2007,6 +2124,13 @@ snapshots:
     dependencies:
       is-number: 7.0.0
 
+  tough-cookie@4.1.4:
+    dependencies:
+      psl: 1.9.0
+      punycode: 2.3.1
+      universalify: 0.2.0
+      url-parse: 1.5.10
+
   ts-api-utils@1.3.0(typescript@5.5.4):
     dependencies:
       typescript: 5.5.4
@@ -2041,11 +2165,22 @@ snapshots:
 
   undici-types@6.13.0: {}
 
+  undici@5.28.4:
+    dependencies:
+      "@fastify/busboy": 2.1.1
+
   undici@6.13.0: {}
+
+  universalify@0.2.0: {}
 
   uri-js@4.4.1:
     dependencies:
       punycode: 2.3.1
+
+  url-parse@1.5.10:
+    dependencies:
+      querystringify: 2.2.0
+      requires-port: 1.0.0
 
   which@2.0.2:
     dependencies:

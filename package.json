@@ -33,6 +33,7 @@
     "zod": "^3.23.8"
   },
   "dependencies": {
+    "@distube/ytdl-core": "^4.14.3",
     "discord.js": "^14.15.3"
   }
 }

@@ -1,5 +1,6 @@
 import type { ChatInputCommandInteraction } from "discord.js";
 import { SlashCommandBuilder } from "discord.js";
+import { downloadYoutubeAudio } from "./ytdl.js";
 
 export class SlashCommand extends SlashCommandBuilder {
   constructor(private callback: (interaction: ChatInputCommandInteraction) => void | Promise<void>) {
@@ -15,8 +16,9 @@ export const slashCommands = new Map<string, SlashCommand>();
 
 const playCommand = new SlashCommand(async interaction => {
   const url = interaction.options.getString("url", true);
-  console.log(url);
-  await interaction.reply({ content: "Hello!", ephemeral: true });
+  await interaction.reply({ content: "Downloading...", ephemeral: true });
+  await downloadYoutubeAudio(url, "test.mp3");
+  await interaction.editReply({ content: "Downloaded!" });
 })
   .setName("play")
   .setDescription("Play a song");
