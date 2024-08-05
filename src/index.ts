@@ -1,3 +1,4 @@
+import { getVoiceConnections } from "@discordjs/voice";
 import { djsClient } from "@lib/client.js";
 import { env } from "@lib/env.js";
 import { slashCommands } from "@lib/SlashCommand.js";
@@ -34,6 +35,7 @@ await djsClient.login(env.DISCORD_BOT_TOKEN);
   process.on(eventType, () => {
     process.removeAllListeners();
     console.log(`\nReceived ${eventType} event, exiting...`);
+    getVoiceConnections().forEach(connection => connection.destroy());
     djsClient.destroy().catch(console.error);
   });
 });

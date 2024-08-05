@@ -1,3 +1,3 @@
 import { Client } from "discord.js";
 
-export const djsClient = new Client({ intents: [] });
+export const djsClient = new Client({ intents: ["GuildMembers", "GuildVoiceStates", "Guilds"] });
