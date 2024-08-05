@@ -36,6 +36,9 @@ await djsClient.login(env.DISCORD_BOT_TOKEN);
     process.removeAllListeners();
     console.log(`\nReceived ${eventType} event, exiting...`);
     getVoiceConnections().forEach(connection => connection.destroy());
-    djsClient.destroy().catch(console.error);
+    djsClient
+      .destroy()
+      .then(() => process.exit(0))
+      .catch(console.error);
   });
 });
