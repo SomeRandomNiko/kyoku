@@ -9,3 +9,8 @@ export function downloadYoutubeAudio(url: string, outputPath: string) {
       .on("finish", resolve);
   });
 }
+
+export async function getVideoInfo(url: string) {
+  const info = await ytdl.getInfo(url);
+  return info;
+}

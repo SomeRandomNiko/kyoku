@@ -1,8 +1,10 @@
 import { AudioPlayer, AudioPlayerStatus, createAudioResource, joinVoiceChannel } from "@discordjs/voice";
 import type { ChatInputCommandInteraction } from "discord.js";
 import { SlashCommandBuilder } from "discord.js";
-import { createReadStream } from "fs";
-import { downloadYoutubeAudio } from "./ytdl.js";
+import { createReadStream, existsSync } from "fs";
+import path from "path";
+import { env } from "./env.js";
+import { downloadYoutubeAudio, getVideoInfo } from "./ytdl.js";
 
 export class SlashCommand extends SlashCommandBuilder {
   constructor(private callback: (interaction: ChatInputCommandInteraction) => void | Promise<void>) {
@@ -26,16 +28,23 @@ const playCommand = new SlashCommand(async interaction => {
 
   const voiceChannel = interaction.member.voice.channel;
 
-  console.log(voiceChannel);
-
   if (!voiceChannel) {
     await interaction.reply({ content: "You must be in a voice channel to use this command.", ephemeral: true });
     return;
   }
 
-  await interaction.reply({ content: "Downloading...", ephemeral: true });
-  await downloadYoutubeAudio(url, "test.mp3");
-  await interaction.editReply({ content: "Downloaded!" });
+  const info = await getVideoInfo(url);
+  const videoId = info.videoDetails.videoId;
+
+  const filepath = path.join(env.DOWNLOADS_PATH, videoId);
+
+  if (!existsSync(filepath)) {
+    await interaction.reply({ content: "Downloading...", ephemeral: true });
+    await downloadYoutubeAudio(url, filepath);
+    await interaction.editReply({ content: "Downloaded!" });
+  } else {
+    await interaction.reply({ content: "Downloaded!", ephemeral: true });
+  }
 
   const connection = joinVoiceChannel({
     channelId: voiceChannel.id,
@@ -45,7 +54,7 @@ const playCommand = new SlashCommand(async interaction => {
 
   const player = new AudioPlayer();
   connection.subscribe(player);
-  player.play(createAudioResource(createReadStream("test.mp3")));
+  player.play(createAudioResource(createReadStream(filepath)));
   player.on("stateChange", (oldState, newState) => {
     if (oldState.status === AudioPlayerStatus.Playing && newState.status === AudioPlayerStatus.Idle) {
       connection.destroy();

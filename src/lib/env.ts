@@ -6,6 +6,7 @@ const envSchema = z.object({
   DISCORD_BOT_TOKEN: z.string(),
   APPLICATION_ID: z.string(),
   GUILD_ID: z.string(),
+  DOWNLOADS_PATH: z.string(),
 });
 
 const validation = envSchema.safeParse(process.env);
