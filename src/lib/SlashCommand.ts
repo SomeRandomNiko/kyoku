@@ -1,9 +1,10 @@
 import { AudioPlayer, AudioPlayerStatus, createAudioResource, joinVoiceChannel } from "@discordjs/voice";
 import type { ChatInputCommandInteraction } from "discord.js";
-import { SlashCommandBuilder } from "discord.js";
+import { bold, EmbedBuilder, SlashCommandBuilder, userMention } from "discord.js";
 import { createReadStream, existsSync } from "fs";
 import path from "path";
 import { env } from "./env.js";
+import { formatSeconds } from "./utils.js";
 import { downloadYoutubeAudio, getVideoInfo } from "./ytdl.js";
 
 export class SlashCommand extends SlashCommandBuilder {
@@ -11,8 +12,9 @@ export class SlashCommand extends SlashCommandBuilder {
     super();
   }
 
-  run(interaction: ChatInputCommandInteraction) {
-    return this.callback(interaction);
+  async run(interaction: ChatInputCommandInteraction) {
+    await interaction.deferReply();
+    return await this.callback(interaction);
   }
 }
 
@@ -20,7 +22,7 @@ export const slashCommands = new Map<string, SlashCommand>();
 
 const playCommand = new SlashCommand(async interaction => {
   if (!interaction.inCachedGuild()) {
-    await interaction.reply({ content: "This command can only be used if the bot is in the server.", ephemeral: true });
+    await interaction.editReply({ content: "This command can only be used if the bot is in the server." });
     return;
   }
 
@@ -29,22 +31,45 @@ const playCommand = new SlashCommand(async interaction => {
   const voiceChannel = interaction.member.voice.channel;
 
   if (!voiceChannel) {
-    await interaction.reply({ content: "You must be in a voice channel to use this command.", ephemeral: true });
+    await interaction.editReply({ content: "You must be in a voice channel to use this command." });
     return;
   }
 
-  const info = await getVideoInfo(url);
+  const info = await getVideoInfo(url).catch(error => {
+    console.error(new Error(`Error getting video info for url "${url}"`, { cause: error }));
+    return null;
+  });
+
+  if (!info) {
+    await interaction.editReply({ content: "Could not find video info for this url." });
+    return;
+  }
   const videoId = info.videoDetails.videoId;
+  const thumbnailUrl = info.videoDetails.thumbnails.sort((a, b) => b.width - a.width)[0]?.url;
+  const videoTitle = info.player_response.videoDetails.title;
+  const channelName = info.player_response.videoDetails.author;
+  const durationSeconds = parseInt(info.player_response.videoDetails.lengthSeconds);
 
   const filepath = path.join(env.DOWNLOADS_PATH, videoId);
 
   if (!existsSync(filepath)) {
-    await interaction.reply({ content: "Downloading...", ephemeral: true });
     await downloadYoutubeAudio(url, filepath);
-    await interaction.editReply({ content: "Downloaded!" });
-  } else {
-    await interaction.reply({ content: "Downloaded!", ephemeral: true });
   }
+
+  await interaction.editReply({
+    content: `Playing ${bold(videoTitle)}, requested by ${userMention(interaction.user.id)}`,
+    embeds: [
+      new EmbedBuilder()
+        .setTitle(videoTitle)
+        .setURL(url)
+        .setColor("#FF0000")
+        .addFields([
+          { name: "Channel", value: channelName, inline: true },
+          { name: "Duration", value: formatSeconds(durationSeconds), inline: true },
+        ])
+        .setImage(thumbnailUrl ?? null),
+    ],
+  });
 
   const connection = joinVoiceChannel({
     channelId: voiceChannel.id,
