@@ -6,12 +6,10 @@ import {
   joinVoiceChannel,
 } from "@discordjs/voice";
 import { bold, EmbedBuilder, userMention } from "discord.js";
-import { createReadStream, existsSync } from "fs";
-import { join } from "path";
-import { env } from "./env.js";
+import { createReadStream } from "fs";
 import { MySlashCommandBuilder } from "./MySlashCommandBuilder.js";
-import { formatSeconds } from "./utils.js";
-import { downloadYoutubeAudio, getVideoInfo } from "./ytdl.js";
+import { formatSeconds, getAudioFile, getMetadata } from "./utils.js";
+import { getVideoID } from "./ytdl.js";
 
 export const registeredCommands = new Map<string, MySlashCommandBuilder>();
 
@@ -32,25 +30,33 @@ const playCommand = new MySlashCommandBuilder()
       return;
     }
 
-    const info = await getVideoInfo(url).catch(error => {
-      console.error(new Error(`Error getting video info for url "${url}"`, { cause: error }));
+    const videoId = await getVideoID(url).catch(error => {
+      console.error(new Error(`Error getting video id for url "${url}"`, { cause: error }));
       return null;
     });
 
-    if (!info) {
+    if (!videoId) {
+      await interaction.editReply({ content: "Could not find video id for this url." });
+      return;
+    }
+
+    const metadata = await getMetadata(videoId);
+
+    if (!metadata) {
       await interaction.editReply({ content: "Could not find video info for this url." });
       return;
     }
-    const videoId = info.videoDetails.videoId;
-    const thumbnailUrl = info.videoDetails.thumbnails.sort((a, b) => b.width - a.width)[0]?.url;
-    const videoTitle = info.player_response.videoDetails.title;
-    const channelName = info.player_response.videoDetails.author;
-    const durationSeconds = parseInt(info.player_response.videoDetails.lengthSeconds);
 
-    const filepath = join(env.DOWNLOADS_PATH, videoId);
+    const thumbnailUrl = metadata.videoDetails.thumbnails.sort((a, b) => b.width - a.width)[0]?.url;
+    const videoTitle = metadata.player_response.videoDetails.title;
+    const channelName = metadata.player_response.videoDetails.author;
+    const durationSeconds = parseInt(metadata.player_response.videoDetails.lengthSeconds);
 
-    if (!existsSync(filepath)) {
-      await downloadYoutubeAudio(url, filepath);
+    const audioFilePath = await getAudioFile(videoId);
+
+    if (!audioFilePath) {
+      await interaction.editReply({ content: "Could not find audio file for this url." });
+      return;
     }
 
     await interaction.editReply({
@@ -76,7 +82,7 @@ const playCommand = new MySlashCommandBuilder()
 
     const player = new AudioPlayer();
     connection.subscribe(player);
-    player.play(createAudioResource(createReadStream(filepath)));
+    player.play(createAudioResource(createReadStream(audioFilePath)));
     player.on("stateChange", (oldState, newState) => {
       if (oldState.status === AudioPlayerStatus.Playing && newState.status === AudioPlayerStatus.Idle) {
         connection.destroy();
