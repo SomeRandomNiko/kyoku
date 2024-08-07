@@ -1,16 +1,9 @@
-import {
-  AudioPlayer,
-  AudioPlayerStatus,
-  createAudioResource,
-  getVoiceConnection,
-  joinVoiceChannel,
-} from "@discordjs/voice";
+import { AudioPlayer, AudioPlayerStatus, getVoiceConnection, joinVoiceChannel } from "@discordjs/voice";
+import ytdl from "@distube/ytdl-core";
 import { bold, userMention } from "discord.js";
-import { createReadStream } from "fs";
+import { Audio } from "./Audio.js";
 import { Metadata } from "./Metadata.js";
 import { MySlashCommandBuilder } from "./MySlashCommandBuilder.js";
-import { getAudioFile } from "./utils.js";
-import { getVideoID } from "./ytdl.js";
 
 export const registeredCommands = new Map<string, MySlashCommandBuilder>();
 
@@ -31,12 +24,12 @@ const playCommand = new MySlashCommandBuilder()
       return;
     }
 
-    const videoId = await getVideoID(url).catch(error => {
-      console.error(new Error(`Error getting video id for url "${url}"`, { cause: error }));
-      return null;
-    });
+    let videoId: string;
 
-    if (!videoId) {
+    try {
+      videoId = ytdl.getVideoID(url);
+    } catch (error) {
+      console.error(new Error(`Error getting video id for url "${url}"`, { cause: error }));
       await interaction.editReply({ content: "Could not find video id for this url." });
       return;
     }
@@ -48,10 +41,10 @@ const playCommand = new MySlashCommandBuilder()
       return;
     }
 
-    const audioFilePath = await getAudioFile(videoId);
+    const audio = await Audio.fromId(videoId);
 
-    if (!audioFilePath) {
-      await interaction.editReply({ content: "Could not find audio file for this url." });
+    if (!audio) {
+      await interaction.editReply({ content: "Could not find audio" });
       return;
     }
 
@@ -68,7 +61,7 @@ const playCommand = new MySlashCommandBuilder()
 
     const player = new AudioPlayer();
     connection.subscribe(player);
-    player.play(createAudioResource(createReadStream(audioFilePath)));
+    player.play(audio.toAudioResource());
     player.on("stateChange", (oldState, newState) => {
       if (oldState.status === AudioPlayerStatus.Playing && newState.status === AudioPlayerStatus.Idle) {
         connection.destroy();

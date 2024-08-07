@@ -6,7 +6,7 @@ import { env } from "./env.js";
 import { formatSeconds } from "./utils.js";
 
 export class Metadata {
-  static getMetadataFilePath(videoId: string) {
+  static getFilePath(videoId: string) {
     return join(env.DOWNLOADS_PATH, `${videoId}.json`);
   }
 
@@ -33,8 +33,8 @@ export class Metadata {
   }
 
   toFile() {
-    const metadataFilepath = Metadata.getMetadataFilePath(this.videoId);
-    writeFileSync(metadataFilepath, JSON.stringify(this.toJSON()));
+    const filepath = Metadata.getFilePath(this.videoId);
+    writeFileSync(filepath, JSON.stringify(this.toJSON()));
   }
 
   static fromJSON(json: Metadata) {
@@ -42,11 +42,11 @@ export class Metadata {
   }
 
   static fromCache(videoId: string) {
-    const metadataFilepath = Metadata.getMetadataFilePath(videoId);
-    if (!existsSync(metadataFilepath)) {
+    const filepath = Metadata.getFilePath(videoId);
+    if (!existsSync(filepath)) {
       return null;
     }
-    return Metadata.fromJSON(JSON.parse(readFileSync(metadataFilepath, "utf-8")));
+    return Metadata.fromJSON(JSON.parse(readFileSync(filepath, "utf-8")));
   }
 
   static async fromYoutube(videoId: string) {
