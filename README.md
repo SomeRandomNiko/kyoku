@@ -4,7 +4,9 @@ A discord music bot that works with youtube
 
 ## Todo
 
-- [x] Cache youtube results
+- [ ] Cache youtube results
+  - [x] Audio File
+  - [ ] Metadata
 - [ ] Database (SQLite, drizzle)
 - [x] Stop
 - [ ] Pause/Resume

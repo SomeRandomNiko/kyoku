@@ -1,7 +1,7 @@
 import { getVoiceConnections } from "@discordjs/voice";
 import { djsClient } from "@lib/client.js";
+import { registeredCommands } from "@lib/commands.js";
 import { env } from "@lib/env.js";
-import { slashCommands } from "@lib/SlashCommand.js";
 
 console.log(`Logging in...`);
 
@@ -11,7 +11,7 @@ djsClient.once("ready", djsClient => {
 
 djsClient.on("interactionCreate", async interaction => {
   if (interaction.isChatInputCommand()) {
-    const command = slashCommands.get(interaction.commandName);
+    const command = registeredCommands.get(interaction.commandName);
     if (!command) {
       await interaction.reply({ content: "Unknown command!", ephemeral: true });
       return;
