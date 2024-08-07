@@ -6,7 +6,7 @@ A discord music bot that works with youtube
 
 - [x] Cache youtube results
 - [ ] Database (SQLite, drizzle)
-- [ ] Stop
+- [x] Stop
 - [ ] Pause/Resume
 - [ ] Queue
 - [ ] Skip

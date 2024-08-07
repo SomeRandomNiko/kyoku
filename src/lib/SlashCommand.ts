@@ -1,4 +1,10 @@
-import { AudioPlayer, AudioPlayerStatus, createAudioResource, joinVoiceChannel } from "@discordjs/voice";
+import {
+  AudioPlayer,
+  AudioPlayerStatus,
+  createAudioResource,
+  getVoiceConnection,
+  joinVoiceChannel,
+} from "@discordjs/voice";
 import type { ChatInputCommandInteraction } from "discord.js";
 import { bold, EmbedBuilder, SlashCommandBuilder, userMention } from "discord.js";
 import { createReadStream, existsSync } from "fs";
@@ -8,24 +14,22 @@ import { formatSeconds } from "./utils.js";
 import { downloadYoutubeAudio, getVideoInfo } from "./ytdl.js";
 
 export class SlashCommand extends SlashCommandBuilder {
-  constructor(private callback: (interaction: ChatInputCommandInteraction) => void | Promise<void>) {
+  constructor(private callback: (interaction: ChatInputCommandInteraction<"cached">) => void | Promise<void>) {
     super();
   }
 
   async run(interaction: ChatInputCommandInteraction) {
+    if (!interaction.inCachedGuild()) {
+      await interaction.reply({ content: "This command can only be used if the bot is in the server." });
+      return;
+    }
     await interaction.deferReply();
     return await this.callback(interaction);
   }
 }
 
 export const slashCommands = new Map<string, SlashCommand>();
-
 const playCommand = new SlashCommand(async interaction => {
-  if (!interaction.inCachedGuild()) {
-    await interaction.editReply({ content: "This command can only be used if the bot is in the server." });
-    return;
-  }
-
   const url = interaction.options.getString("url", true);
 
   const voiceChannel = interaction.member.voice.channel;
@@ -94,3 +98,17 @@ playCommand.addStringOption(option =>
 );
 
 slashCommands.set("play", playCommand);
+
+const stopCommand = new SlashCommand(async interaction => {
+  const connection = getVoiceConnection(interaction.guildId);
+  if (!connection) {
+    await interaction.editReply({ content: "I am not in a voice channel!" });
+    return;
+  }
+  connection.destroy();
+  await interaction.editReply({ content: "Stopped the current song." });
+})
+  .setName("stop")
+  .setDescription("Stop the current song");
+
+slashCommands.set("stop", stopCommand);
