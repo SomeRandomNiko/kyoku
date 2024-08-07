@@ -5,10 +5,11 @@ import {
   getVoiceConnection,
   joinVoiceChannel,
 } from "@discordjs/voice";
-import { bold, EmbedBuilder, userMention } from "discord.js";
+import { bold, userMention } from "discord.js";
 import { createReadStream } from "fs";
+import { Metadata } from "./Metadata.js";
 import { MySlashCommandBuilder } from "./MySlashCommandBuilder.js";
-import { formatSeconds, getAudioFile, getMetadata } from "./utils.js";
+import { getAudioFile } from "./utils.js";
 import { getVideoID } from "./ytdl.js";
 
 export const registeredCommands = new Map<string, MySlashCommandBuilder>();
@@ -40,17 +41,12 @@ const playCommand = new MySlashCommandBuilder()
       return;
     }
 
-    const metadata = await getMetadata(videoId);
+    const metadata = await Metadata.fromId(videoId);
 
     if (!metadata) {
-      await interaction.editReply({ content: "Could not find video info for this url." });
+      await interaction.editReply({ content: "Could not find metadata" });
       return;
     }
-
-    const thumbnailUrl = metadata.videoDetails.thumbnails.sort((a, b) => b.width - a.width)[0]?.url;
-    const videoTitle = metadata.player_response.videoDetails.title;
-    const channelName = metadata.player_response.videoDetails.author;
-    const durationSeconds = parseInt(metadata.player_response.videoDetails.lengthSeconds);
 
     const audioFilePath = await getAudioFile(videoId);
 
@@ -60,18 +56,8 @@ const playCommand = new MySlashCommandBuilder()
     }
 
     await interaction.editReply({
-      content: `Playing ${bold(videoTitle)}, requested by ${userMention(interaction.user.id)}`,
-      embeds: [
-        new EmbedBuilder()
-          .setTitle(videoTitle)
-          .setURL(url)
-          .setColor("#FF0000")
-          .addFields([
-            { name: "Channel", value: channelName, inline: true },
-            { name: "Duration", value: formatSeconds(durationSeconds), inline: true },
-          ])
-          .setImage(thumbnailUrl ?? null),
-      ],
+      content: `Playing ${bold(metadata.title)}, requested by ${userMention(interaction.user.id)}`,
+      embeds: [metadata.toEmbed()],
     });
 
     const connection = joinVoiceChannel({
