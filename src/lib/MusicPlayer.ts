@@ -65,6 +65,7 @@ export class MusicPlayer {
   destroy() {
     this.audioPlayer.stop();
     this.connection.destroy();
+    MusicPlayer.guildMusicPlayers.delete(this.guildId);
   }
 
   addSong(song: Song) {
@@ -74,6 +75,7 @@ export class MusicPlayer {
   skip() {
     const song = this.queue.dequeue();
     if (!song) {
+      this.destroy();
       return;
     }
     this.play(song);
