@@ -9,9 +9,8 @@ import {
 } from "@discordjs/voice";
 import ytdl from "@distube/ytdl-core";
 import { bold, userMention } from "discord.js";
-import { Audio } from "./Audio.js";
-import { Metadata } from "./Metadata.js";
 import { MySlashCommandBuilder } from "./MySlashCommandBuilder.js";
+import { Song } from "./Song.js";
 
 export const registeredCommands = new Map<string, MySlashCommandBuilder>();
 const audioPlayers = new Map<string, AudioPlayer>();
@@ -54,23 +53,16 @@ const playCommand = new MySlashCommandBuilder()
       return;
     }
 
-    const metadata = await Metadata.fromId(videoId);
+    const song = await Song.fromId(videoId);
 
-    if (!metadata) {
-      await interaction.editReply({ content: "Could not find metadata" });
-      return;
-    }
-
-    const audio = await Audio.fromId(videoId);
-
-    if (!audio) {
-      await interaction.editReply({ content: "Could not find audio" });
+    if (!song) {
+      await interaction.editReply({ content: "Could not find song" });
       return;
     }
 
     await interaction.editReply({
-      content: `Playing ${bold(metadata.title)}, requested by ${userMention(interaction.user.id)}`,
-      embeds: [metadata.toEmbed()],
+      content: `Playing ${bold(song.title)}, requested by ${userMention(interaction.user.id)}`,
+      embeds: [song.toEmbed()],
     });
 
     const connection = joinVoiceChannel({
@@ -84,7 +76,7 @@ const playCommand = new MySlashCommandBuilder()
     try {
       await entersState(connection, VoiceConnectionStatus.Ready, 5000);
       connection.subscribe(audioPlayer);
-      audioPlayer.play(audio.toAudioResource());
+      audioPlayer.play(song.toAudioResource());
       audioPlayer.on("stateChange", (oldState, newState) => {
         if (oldState.status === AudioPlayerStatus.Playing && newState.status === AudioPlayerStatus.Idle) {
           connection.destroy();

@@ -29,7 +29,7 @@ export class Metadata {
     };
   }
 
-  getUrl() {
+  get url() {
     return `https://www.youtube.com/watch?v=${this.videoId}`;
   }
 
@@ -79,7 +79,7 @@ export class Metadata {
   toEmbed() {
     return new EmbedBuilder()
       .setTitle(this.title)
-      .setURL(this.getUrl())
+      .setURL(this.url)
       .setColor("#FF0000")
       .addFields([
         { name: "Channel", value: this.channelName, inline: true },
