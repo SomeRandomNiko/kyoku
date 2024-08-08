@@ -9,8 +9,10 @@ A discord music bot that works with youtube
   - [x] Metadata
 - [ ] Database (SQLite, drizzle)
 - [x] Stop
-- [ ] Pause/Resume
-- [ ] Queue
-- [ ] Skip
+- [x] Pause/Resume
+- [x] Queue
+- [x] Skip
+- [ ] Show song info on queue add
+- [ ] Show queue command
 - [ ] Search
 - [ ] Song/Queue info
