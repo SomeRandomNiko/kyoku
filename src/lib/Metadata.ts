@@ -2,6 +2,7 @@ import ytdl from "@distube/ytdl-core";
 import { EmbedBuilder } from "discord.js";
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { join } from "path";
+import { Audio } from "./Audio.js";
 import { env } from "./env.js";
 import { formatSeconds } from "./utils.js";
 
@@ -85,5 +86,9 @@ export class Metadata {
         { name: "Duration", value: formatSeconds(this.durationSeconds), inline: true },
       ])
       .setImage(this.thumbnailUrl ?? null);
+  }
+
+  toAudio() {
+    return Audio.fromId(this.videoId);
   }
 }

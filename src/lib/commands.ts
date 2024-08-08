@@ -1,4 +1,12 @@
-import { AudioPlayer, AudioPlayerStatus, getVoiceConnection, joinVoiceChannel } from "@discordjs/voice";
+import {
+  AudioPlayer,
+  AudioPlayerStatus,
+  createAudioPlayer,
+  entersState,
+  getVoiceConnection,
+  joinVoiceChannel,
+  VoiceConnectionStatus,
+} from "@discordjs/voice";
 import ytdl from "@distube/ytdl-core";
 import { bold, userMention } from "discord.js";
 import { Audio } from "./Audio.js";
@@ -6,9 +14,21 @@ import { Metadata } from "./Metadata.js";
 import { MySlashCommandBuilder } from "./MySlashCommandBuilder.js";
 
 export const registeredCommands = new Map<string, MySlashCommandBuilder>();
+const audioPlayers = new Map<string, AudioPlayer>();
 
 function registerCommand(command: MySlashCommandBuilder) {
   registeredCommands.set(command.name, command);
+}
+
+function getAudioPlayer(guildId: string) {
+  const player = audioPlayers.get(guildId);
+  if (player) {
+    return player;
+  }
+
+  const newPlayer = createAudioPlayer();
+  audioPlayers.set(guildId, newPlayer);
+  return newPlayer;
 }
 
 const playCommand = new MySlashCommandBuilder()
@@ -59,14 +79,22 @@ const playCommand = new MySlashCommandBuilder()
       adapterCreator: voiceChannel.guild.voiceAdapterCreator,
     });
 
-    const player = new AudioPlayer();
-    connection.subscribe(player);
-    player.play(audio.toAudioResource());
-    player.on("stateChange", (oldState, newState) => {
-      if (oldState.status === AudioPlayerStatus.Playing && newState.status === AudioPlayerStatus.Idle) {
-        connection.destroy();
-      }
-    });
+    const audioPlayer = getAudioPlayer(interaction.guildId);
+
+    try {
+      await entersState(connection, VoiceConnectionStatus.Ready, 5000);
+      connection.subscribe(audioPlayer);
+      audioPlayer.play(audio.toAudioResource());
+      audioPlayer.on("stateChange", (oldState, newState) => {
+        if (oldState.status === AudioPlayerStatus.Playing && newState.status === AudioPlayerStatus.Idle) {
+          connection.destroy();
+        }
+      });
+    } catch (error) {
+      console.error(new Error(`Error joining voice channel`, { cause: error }));
+      await interaction.editReply({ content: "Could not join voice channel." });
+      return;
+    }
   });
 
 playCommand.addStringOption(option =>
