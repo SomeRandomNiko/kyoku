@@ -1,33 +1,13 @@
-import {
-  AudioPlayer,
-  AudioPlayerStatus,
-  createAudioPlayer,
-  entersState,
-  getVoiceConnection,
-  joinVoiceChannel,
-  VoiceConnectionStatus,
-} from "@discordjs/voice";
 import ytdl from "@distube/ytdl-core";
 import { bold, userMention } from "discord.js";
+import { MusicPlayer } from "./MusicPlayer.js";
 import { MySlashCommandBuilder } from "./MySlashCommandBuilder.js";
 import { Song } from "./Song.js";
 
 export const registeredCommands = new Map<string, MySlashCommandBuilder>();
-const audioPlayers = new Map<string, AudioPlayer>();
 
 function registerCommand(command: MySlashCommandBuilder) {
   registeredCommands.set(command.name, command);
-}
-
-function getAudioPlayer(guildId: string) {
-  const player = audioPlayers.get(guildId);
-  if (player) {
-    return player;
-  }
-
-  const newPlayer = createAudioPlayer();
-  audioPlayers.set(guildId, newPlayer);
-  return newPlayer;
 }
 
 const playCommand = new MySlashCommandBuilder()
@@ -60,32 +40,26 @@ const playCommand = new MySlashCommandBuilder()
       return;
     }
 
-    await interaction.editReply({
-      content: `Playing ${bold(song.title)}, requested by ${userMention(interaction.user.id)}`,
-      embeds: [song.toEmbed()],
-    });
+    const musicPlayer = MusicPlayer.getMusicPlayerOfGuild(interaction.guildId);
 
-    const connection = joinVoiceChannel({
-      channelId: voiceChannel.id,
-      guildId: voiceChannel.guildId,
-      adapterCreator: voiceChannel.guild.voiceAdapterCreator,
-    });
-
-    const audioPlayer = getAudioPlayer(interaction.guildId);
+    if (musicPlayer) {
+      musicPlayer.addSong(song);
+      await interaction.editReply({ content: "Added song to queue." });
+      return;
+    }
 
     try {
-      await entersState(connection, VoiceConnectionStatus.Ready, 5000);
-      connection.subscribe(audioPlayer);
-      audioPlayer.play(song.toAudioResource());
-      audioPlayer.on("stateChange", (oldState, newState) => {
-        if (oldState.status === AudioPlayerStatus.Playing && newState.status === AudioPlayerStatus.Idle) {
-          connection.destroy();
-        }
+      const musicPlayer = await MusicPlayer.create(voiceChannel);
+
+      musicPlayer.play(song);
+
+      await interaction.editReply({
+        content: `Playing ${bold(song.title)}, requested by ${userMention(interaction.user.id)}`,
+        embeds: [song.toEmbed()],
       });
     } catch (error) {
-      console.error(new Error(`Error joining voice channel`, { cause: error }));
-      await interaction.editReply({ content: "Could not join voice channel." });
-      return;
+      console.error(new Error(`Error getting music player`, { cause: error }));
+      await interaction.editReply({ content: "Error getting music player" });
     }
   });
 
@@ -99,13 +73,76 @@ const stopCommand = new MySlashCommandBuilder()
   .setName("stop")
   .setDescription("Stop the current song")
   .setCallback(async interaction => {
-    const connection = getVoiceConnection(interaction.guildId);
-    if (!connection) {
+    const musicPlayer = MusicPlayer.getMusicPlayerOfGuild(interaction.guildId);
+
+    if (!musicPlayer) {
       await interaction.editReply({ content: "I am not in a voice channel!" });
       return;
     }
-    connection.destroy();
+
+    musicPlayer.destroy();
     await interaction.editReply({ content: "Stopped the current song." });
   });
 
 registerCommand(stopCommand);
+
+const pauseCommand = new MySlashCommandBuilder()
+  .setName("pause")
+  .setDescription("Pause the player")
+  .setCallback(async interaction => {
+    const musicPlayer = MusicPlayer.getMusicPlayerOfGuild(interaction.guildId);
+
+    if (!musicPlayer) {
+      await interaction.editReply({ content: "I am not in a voice channel!" });
+      return;
+    }
+
+    if (!musicPlayer.isPlaying) {
+      await interaction.editReply({ content: "I am already paused!" });
+      return;
+    }
+
+    musicPlayer.pause();
+    await interaction.editReply({ content: "Paused the player." });
+  });
+
+registerCommand(pauseCommand);
+
+const resumeCommand = new MySlashCommandBuilder()
+  .setName("resume")
+  .setDescription("Resume the player")
+  .setCallback(async interaction => {
+    const musicPlayer = MusicPlayer.getMusicPlayerOfGuild(interaction.guildId);
+
+    if (!musicPlayer) {
+      await interaction.editReply({ content: "I am not in a voice channel!" });
+      return;
+    }
+
+    if (musicPlayer.isPlaying) {
+      await interaction.editReply({ content: "I am already playing!" });
+      return;
+    }
+
+    musicPlayer.resume();
+    await interaction.editReply({ content: "Resumed the player." });
+  });
+
+registerCommand(resumeCommand);
+
+const skipCommand = new MySlashCommandBuilder()
+  .setName("skip")
+  .setDescription("Skip the current song")
+  .setCallback(async interaction => {
+    const musicPlayer = MusicPlayer.getMusicPlayerOfGuild(interaction.guildId);
+
+    if (!musicPlayer) {
+      await interaction.editReply({ content: "I am not in a voice channel!" });
+      return;
+    }
+
+    musicPlayer.skip();
+    await interaction.editReply({ content: "Skipped the current song." });
+  });
+
+registerCommand(skipCommand);
