@@ -12,7 +12,8 @@ A discord music bot that works with youtube
 - [x] Pause/Resume
 - [x] Queue
 - [x] Skip
-- [ ] Show song info on queue add
+- [ ] Better messages (send message when next song starts)
+- [ ] Handle manual disconnects and channel moves
 - [ ] Show queue command
 - [ ] Search
 - [ ] Song/Queue info
