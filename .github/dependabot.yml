@@ -16,4 +16,3 @@ updates:
     versioning-strategy: auto
     pull-request-branch-name:
       separator: "-"
-    version-requirement-updates: "increase-if-necessary"
