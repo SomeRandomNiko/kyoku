@@ -8,6 +8,8 @@ A discord music bot that works with youtube
   - [x] Audio File
   - [x] Metadata
 - [ ] Database (SQLite, drizzle)
+- [ ] Text channel per server where bot messages are sent
+- [ ] Setup command
 - [x] Stop
 - [x] Pause/Resume
 - [x] Queue
