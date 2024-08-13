@@ -44,7 +44,10 @@ const playCommand = new MySlashCommandBuilder()
 
     if (musicPlayer) {
       musicPlayer.addSong(song);
-      await interaction.editReply({ content: "Added song to queue." });
+      await interaction.editReply({
+        content: `Added song ${bold(song.title)} to queue, requested by ${userMention(interaction.user.id)}`,
+        embeds: [song.toEmbed()],
+      });
       return;
     }
 
