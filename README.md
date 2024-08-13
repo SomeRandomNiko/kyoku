@@ -19,3 +19,4 @@ A discord music bot that works with youtube
 - [ ] Show queue command
 - [ ] Search
 - [ ] Song/Queue info
+- [ ] Loop
