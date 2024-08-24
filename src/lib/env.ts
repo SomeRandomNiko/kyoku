@@ -7,6 +7,7 @@ const envSchema = z.object({
   APPLICATION_ID: z.string(),
   GUILD_ID: z.string(),
   DOWNLOADS_PATH: z.string(),
+  DATABASE_PATH: z.string(),
 });
 
 const validation = envSchema.safeParse(process.env);
