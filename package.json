@@ -22,7 +22,7 @@
     "db:studio": "drizzle-kit studio"
   },
   "devDependencies": {
-    "@eslint/js": "^9.9.0",
+    "@eslint/js": "^9.10.0",
     "@types/better-sqlite3": "^7.6.11",
     "@types/node": "^22.5.0",
     "discord-api-types": "^0.37.97",
