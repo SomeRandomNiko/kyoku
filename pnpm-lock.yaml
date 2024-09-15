@@ -17,14 +17,14 @@ importers:
         specifier: ^4.14.4
         version: 4.14.4
       better-sqlite3:
-        specifier: ^11.2.1
-        version: 11.2.1
+        specifier: ^11.3.0
+        version: 11.3.0
       discord.js:
-        specifier: ^14.16.1
-        version: 14.16.1
+        specifier: ^14.16.2
+        version: 14.16.2
       drizzle-orm:
         specifier: ^0.33.0
-        version: 0.33.0(@types/better-sqlite3@7.6.11)(better-sqlite3@11.2.1)
+        version: 0.33.0(@types/better-sqlite3@7.6.11)(better-sqlite3@11.3.0)
       ffmpeg-static:
         specifier: ^5.2.0
         version: 5.2.0
@@ -39,8 +39,8 @@ importers:
         specifier: ^7.6.11
         version: 7.6.11
       "@types/node":
-        specifier: ^22.5.4
-        version: 22.5.4
+        specifier: ^22.5.5
+        version: 22.5.5
       discord-api-types:
         specifier: ^0.37.100
         version: 0.37.100
@@ -57,8 +57,8 @@ importers:
         specifier: ^15.9.0
         version: 15.9.0
       husky:
-        specifier: ^9.1.5
-        version: 9.1.5
+        specifier: ^9.1.6
+        version: 9.1.6
       lint-staged:
         specifier: ^15.2.10
         version: 15.2.10
@@ -66,8 +66,8 @@ importers:
         specifier: ^3.3.3
         version: 3.3.3
       tsx:
-        specifier: ^4.19.0
-        version: 4.19.0
+        specifier: ^4.19.1
+        version: 4.19.1
       typescript:
         specifier: ^5.6.2
         version: 5.6.2
@@ -641,9 +641,9 @@ packages:
     peerDependencies:
       eslint: ^6.0.0 || ^7.0.0 || >=8.0.0
 
-  "@eslint-community/regexpp@4.11.0":
+  "@eslint-community/regexpp@4.11.1":
     resolution:
-      { integrity: sha512-G/M/tIiMrTAxEWRfLfQJMmGNX28IxBg4PBz8XqQhqUHLFI6TL2htpIB1iQCj144V5ee/JaKyT9/WZ0MGZWfA7A== }
+      { integrity: sha512-m4DVN9ZqskZoLU5GlWZadwDnYo3vAEydiUayB9widCl9ffWx2IvPnp6n3on5rJmziJSw9Bv+Z3ChDVdMwXCY8Q== }
     engines: { node: ^12.0.0 || ^14.0.0 || >=16.0.0 }
 
   "@eslint/config-array@0.18.0":
@@ -724,9 +724,9 @@ packages:
     resolution:
       { integrity: sha512-F0KIgDJfy2nA3zMLmWGKxcH2ZVEtCZXHHdOQs2gSaQ27+lNeEfGxzkIw90aXswATX7AZ33tahPbzy6KAfUreVw== }
 
-  "@types/node@22.5.4":
+  "@types/node@22.5.5":
     resolution:
-      { integrity: sha512-FDuKUJQm/ju9fT/SeX/6+gBzoPzlVCzfzmGkwKvRHQVxi4BntVbyIwf6a4Xn62mrvndLiml6z/UBXIdEVjQLXg== }
+      { integrity: sha512-Xjs4y5UPO/CLdzpgR6GirZJx36yScjh73+2NlLlkFRSoQN8B0DpfXPdZGnvVmLRLOsqDpOfTNv7D9trgGhmOIA== }
 
   "@types/ws@8.5.12":
     resolution:
@@ -879,9 +879,9 @@ packages:
     resolution:
       { integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA== }
 
-  better-sqlite3@11.2.1:
+  better-sqlite3@11.3.0:
     resolution:
-      { integrity: sha512-Xbt1d68wQnUuFIEVsbt6V+RG30zwgbtCGQ4QOcXVrOH0FE4eHk64FWZ9NUfRHS4/x1PXqwz/+KOrnXD7f0WieA== }
+      { integrity: sha512-iHt9j8NPYF3oKCNOO5ZI4JwThjt3Z6J6XrcwG85VNMVzv1ByqrHWv5VILEbCMFWDsoHhXvQ7oC8vgRXFAKgl9w== }
 
   bindings@1.5.0:
     resolution:
@@ -991,16 +991,6 @@ packages:
       { integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w== }
     engines: { node: ">= 8" }
 
-  debug@4.3.6:
-    resolution:
-      { integrity: sha512-O/09Bd4Z1fBrU4VzkhFqVgpPzaGbw6Sm9FEkBT1A/YBXQFGuuSxa1dN2nxgxS34JmKXqYx8CZAwEVoJFImUXIg== }
-    engines: { node: ">=6.0" }
-    peerDependencies:
-      supports-color: "*"
-    peerDependenciesMeta:
-      supports-color:
-        optional: true
-
   debug@4.3.7:
     resolution:
       { integrity: sha512-Er2nc/H7RrMXZBFCEim6TCmMk02Z8vLC2Rbi1KEBggpo0fS6l0S1nnapwmIi3yW/+GOJap1Krg4w0Hg80oCqgQ== }
@@ -1046,9 +1036,9 @@ packages:
     resolution:
       { integrity: sha512-No1BXPcVkyVD4ZVmbNgDKaBoqgeQ+FJpzZ8wqHkfmBnTZig1FcH3iPPersiK1TUIAzgClh2IvOuVUYfcWLQAOA== }
 
-  discord.js@14.16.1:
+  discord.js@14.16.2:
     resolution:
-      { integrity: sha512-/diX4shp3q1F3EySGQbQl10el+KIpffLSOJdtM35gGV7zw2ED7rKbASKJT7UIR9L/lTd0KtNenZ/h739TN7diA== }
+      { integrity: sha512-VGNi9WE2dZIxYM8/r/iatQQ+3LT8STW4hhczJOwm+DBeHq66vsKDCk8trChNCB01sMO9crslYuEMeZl2d7r3xw== }
     engines: { node: ">=18" }
 
   dotenv@16.4.5:
@@ -1356,9 +1346,9 @@ packages:
       { integrity: sha512-VaUJspBffn/LMCJVoMvSAdmscJyS1auj5Zulnn5UoYcY531UWmdwhRWkcGKnGU93m5HSXP9LP2usOryrBtQowA== }
     engines: { node: ">=16" }
 
-  get-tsconfig@4.8.0:
+  get-tsconfig@4.8.1:
     resolution:
-      { integrity: sha512-Pgba6TExTZ0FJAn1qkJAjIeKoDJ3CsI2ChuLohJnZl/tTU8MVrq3b+2t5UOPfRa4RMsorClBjJALkJUMjG1PAw== }
+      { integrity: sha512-k9PN+cFBmaLWtVz29SkUoqU5O0slLuHJXt/2P+tMVFT+phsSGXGkp9t3rQIqdz0e+06EHNGs3oM6ZX1s2zHxRg== }
 
   github-from-package@0.0.0:
     resolution:
@@ -1427,9 +1417,9 @@ packages:
       { integrity: sha512-AXcZb6vzzrFAUE61HnN4mpLqd/cSIwNQjtNWR0euPm6y0iqx3G4gOXaIDdtdDwZmhwe82LA6+zinmW4UBWVePQ== }
     engines: { node: ">=16.17.0" }
 
-  husky@9.1.5:
+  husky@9.1.6:
     resolution:
-      { integrity: sha512-rowAVRUBfI0b4+niA4SJMhfQwc107VLkBUgEYYAOQAbqDCnra1nYh83hF/MDmhYs9t9n1E3DuKOrs2LYNC+0Ag== }
+      { integrity: sha512-sqbjZKK7kf44hfdE94EoX8MZNk0n7HeW37O4YrVGCF4wzgQjp+akPAkfUK5LZ6KuR/6sqeAVuXHji+RzQgOn5A== }
     engines: { node: ">=18" }
     hasBin: true
 
@@ -1667,10 +1657,6 @@ packages:
     engines: { node: ">=10" }
     hasBin: true
 
-  ms@2.1.2:
-    resolution:
-      { integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w== }
-
   ms@2.1.3:
     resolution:
       { integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA== }
@@ -1836,9 +1822,9 @@ packages:
     resolution:
       { integrity: sha512-E/ZsdU4HLs/68gYzgGTkMicWTLPdAftJLfJFlLUAAKZGkStNU72sZjT66SnMDVOfOWY/YAoiD7Jxa9iHvngcag== }
 
-  pump@3.0.0:
+  pump@3.0.2:
     resolution:
-      { integrity: sha512-LwZy+p3SFs1Pytd/jYct4wpv49HiYCqd9Rlc5ZVdk0V+8Yzv6jR5Blk3TRmPL1ft69TxP0IMZGJ+WPFU2BFhww== }
+      { integrity: sha512-tUPXtzlGM8FE3P0ZL6DVs/3P58k9nk8/jZeQCurTJylQA8qFYzHFfhBJkuqyE0FifOsQ0uKWekiZ5g8wtr28cw== }
 
   punycode@2.3.1:
     resolution:
@@ -2061,17 +2047,13 @@ packages:
     resolution:
       { integrity: sha512-ufKpbmrugz5Aou4wcr5Wc1UUFWOLhq+Fm6qa6P0w0K5Qw2yhaUoiWszhCVuNQyNwrlGiscHOmqYoAox1PtvgjA== }
 
-  tslib@2.6.2:
-    resolution:
-      { integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q== }
-
   tslib@2.7.0:
     resolution:
       { integrity: sha512-gLXCKdN1/j47AiHiOkJN69hJmcbGTHI0ImLmbYLHykhgeN0jVGola9yVjFgzCUklsZQMW55o+dW7IXv3RCXDzA== }
 
-  tsx@4.19.0:
+  tsx@4.19.1:
     resolution:
-      { integrity: sha512-bV30kM7bsLZKZIOCHeMNVMJ32/LuJzLVajkQI/qf92J2Qr08ueLQvW00PUZGiuLPP760UINwupgUj8qrSCPUKg== }
+      { integrity: sha512-0flMz1lh74BR4wOvBjuh9olbnwqCPc35OOlfyzHba0Dc+QNUeWX/Gq2YTbnwcWPO3BMd8fkzRVrHcsR+a7z7rA== }
     engines: { node: ">=18.0.0" }
     hasBin: true
 
@@ -2267,7 +2249,7 @@ snapshots:
       "@types/ws": 8.5.12
       discord-api-types: 0.37.83
       prism-media: 1.3.5(@discordjs/opus@0.9.0)(ffmpeg-static@5.2.0)
-      tslib: 2.6.2
+      tslib: 2.7.0
       ws: 8.18.0
     transitivePeerDependencies:
       - "@discordjs/opus"
@@ -2313,7 +2295,7 @@ snapshots:
   "@esbuild-kit/esm-loader@2.6.5":
     dependencies:
       "@esbuild-kit/core-utils": 3.3.2
-      get-tsconfig: 4.8.0
+      get-tsconfig: 4.8.1
 
   "@esbuild/aix-ppc64@0.19.12":
     optional: true
@@ -2527,7 +2509,7 @@ snapshots:
       eslint: 9.10.0
       eslint-visitor-keys: 3.4.3
 
-  "@eslint-community/regexpp@4.11.0": {}
+  "@eslint-community/regexpp@4.11.1": {}
 
   "@eslint/config-array@0.18.0":
     dependencies:
@@ -2588,21 +2570,21 @@ snapshots:
 
   "@types/better-sqlite3@7.6.11":
     dependencies:
-      "@types/node": 22.5.4
+      "@types/node": 22.5.5
 
   "@types/node@10.17.60": {}
 
-  "@types/node@22.5.4":
+  "@types/node@22.5.5":
     dependencies:
       undici-types: 6.19.8
 
   "@types/ws@8.5.12":
     dependencies:
-      "@types/node": 22.5.4
+      "@types/node": 22.5.5
 
   "@typescript-eslint/eslint-plugin@8.5.0(@typescript-eslint/parser@8.5.0(eslint@9.10.0)(typescript@5.6.2))(eslint@9.10.0)(typescript@5.6.2)":
     dependencies:
-      "@eslint-community/regexpp": 4.11.0
+      "@eslint-community/regexpp": 4.11.1
       "@typescript-eslint/parser": 8.5.0(eslint@9.10.0)(typescript@5.6.2)
       "@typescript-eslint/scope-manager": 8.5.0
       "@typescript-eslint/type-utils": 8.5.0(eslint@9.10.0)(typescript@5.6.2)
@@ -2693,7 +2675,7 @@ snapshots:
 
   agent-base@6.0.2:
     dependencies:
-      debug: 4.3.6
+      debug: 4.3.7
     transitivePeerDependencies:
       - supports-color
 
@@ -2737,7 +2719,7 @@ snapshots:
 
   base64-js@1.5.1: {}
 
-  better-sqlite3@11.2.1:
+  better-sqlite3@11.3.0:
     dependencies:
       bindings: 1.5.0
       prebuild-install: 7.1.2
@@ -2825,10 +2807,6 @@ snapshots:
       shebang-command: 2.0.0
       which: 2.0.2
 
-  debug@4.3.6:
-    dependencies:
-      ms: 2.1.2
-
   debug@4.3.7:
     dependencies:
       ms: 2.1.3
@@ -2851,7 +2829,7 @@ snapshots:
 
   discord-api-types@0.37.97: {}
 
-  discord.js@14.16.1:
+  discord.js@14.16.2:
     dependencies:
       "@discordjs/builders": 1.9.0
       "@discordjs/collection": 1.5.3
@@ -2880,10 +2858,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.33.0(@types/better-sqlite3@7.6.11)(better-sqlite3@11.2.1):
+  drizzle-orm@0.33.0(@types/better-sqlite3@7.6.11)(better-sqlite3@11.3.0):
     optionalDependencies:
       "@types/better-sqlite3": 7.6.11
-      better-sqlite3: 11.2.1
+      better-sqlite3: 11.3.0
 
   emoji-regex@10.4.0: {}
 
@@ -2996,7 +2974,7 @@ snapshots:
   eslint@9.10.0:
     dependencies:
       "@eslint-community/eslint-utils": 4.4.0(eslint@9.10.0)
-      "@eslint-community/regexpp": 4.11.0
+      "@eslint-community/regexpp": 4.11.1
       "@eslint/config-array": 0.18.0
       "@eslint/eslintrc": 3.1.0
       "@eslint/js": 9.10.0
@@ -3142,7 +3120,7 @@ snapshots:
 
   get-stream@8.0.1: {}
 
-  get-tsconfig@4.8.0:
+  get-tsconfig@4.8.1:
     dependencies:
       resolve-pkg-maps: 1.0.0
 
@@ -3191,13 +3169,13 @@ snapshots:
   https-proxy-agent@5.0.1:
     dependencies:
       agent-base: 6.0.2
-      debug: 4.3.6
+      debug: 4.3.7
     transitivePeerDependencies:
       - supports-color
 
   human-signals@5.0.0: {}
 
-  husky@9.1.5: {}
+  husky@9.1.6: {}
 
   ieee754@1.2.1: {}
 
@@ -3363,8 +3341,6 @@ snapshots:
 
   mkdirp@1.0.4: {}
 
-  ms@2.1.2: {}
-
   ms@2.1.3: {}
 
   napi-build-utils@1.0.2: {}
@@ -3454,7 +3430,7 @@ snapshots:
       mkdirp-classic: 0.5.3
       napi-build-utils: 1.0.2
       node-abi: 3.67.0
-      pump: 3.0.0
+      pump: 3.0.2
       rc: 1.2.8
       simple-get: 4.0.1
       tar-fs: 2.1.1
@@ -3473,7 +3449,7 @@ snapshots:
 
   psl@1.9.0: {}
 
-  pump@3.0.0:
+  pump@3.0.2:
     dependencies:
       end-of-stream: 1.4.4
       once: 1.4.0
@@ -3605,7 +3581,7 @@ snapshots:
     dependencies:
       chownr: 1.1.4
       mkdirp-classic: 0.5.3
-      pump: 3.0.0
+      pump: 3.0.2
       tar-stream: 2.2.0
 
   tar-stream@2.2.0:
@@ -3646,14 +3622,12 @@ snapshots:
 
   ts-mixer@6.0.4: {}
 
-  tslib@2.6.2: {}
-
   tslib@2.7.0: {}
 
-  tsx@4.19.0:
+  tsx@4.19.1:
     dependencies:
       esbuild: 0.23.1
-      get-tsconfig: 4.8.0
+      get-tsconfig: 4.8.1
     optionalDependencies:
       fsevents: 2.3.3
 
