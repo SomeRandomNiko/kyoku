@@ -1,22 +1,15 @@
 import ytdl from "@distube/ytdl-core";
 import { EmbedBuilder } from "discord.js";
-import { existsSync, readFileSync, writeFileSync } from "fs";
-import { join } from "path";
 import { Audio } from "./Audio.js";
-import { env } from "./env.js";
+import * as Q from "./queries.js";
 import { formatSeconds } from "./utils.js";
 
 export class Metadata {
-  static getFilePath(videoId: string) {
-    return join(env.DOWNLOADS_PATH, `${videoId}.json`);
-  }
-
   private constructor(
     public videoId: string,
     public title: string,
     public channelName: string,
     public durationSeconds: number,
-    public thumbnailUrl?: string,
   ) {}
 
   toJSON() {
@@ -25,7 +18,6 @@ export class Metadata {
       title: this.title,
       channelName: this.channelName,
       durationSeconds: this.durationSeconds,
-      thumbnailUrl: this.thumbnailUrl,
     };
   }
 
@@ -33,21 +25,21 @@ export class Metadata {
     return `https://www.youtube.com/watch?v=${this.videoId}`;
   }
 
-  toFile() {
-    const filepath = Metadata.getFilePath(this.videoId);
-    writeFileSync(filepath, JSON.stringify(this.toJSON()));
+  toDb() {
+    return Q.saveMetadata({
+      videoId: this.videoId,
+      title: this.title,
+      channelName: this.channelName,
+      durationSeconds: this.durationSeconds,
+    });
   }
 
-  static fromJSON(json: Metadata) {
-    return new Metadata(json.videoId, json.title, json.channelName, json.durationSeconds, json.thumbnailUrl);
-  }
+  static fromDb(videoId: string) {
+    const song = Q.getMetadata(videoId);
 
-  static fromCache(videoId: string) {
-    const filepath = Metadata.getFilePath(videoId);
-    if (!existsSync(filepath)) {
-      return null;
+    if (song) {
+      return new Metadata(song.videoId, song.title, song.channelName, song.durationSeconds);
     }
-    return Metadata.fromJSON(JSON.parse(readFileSync(filepath, "utf-8")));
   }
 
   static async fromYoutube(videoId: string) {
@@ -58,22 +50,24 @@ export class Metadata {
         videoInfo.videoDetails.title,
         videoInfo.player_response.videoDetails.author,
         parseInt(videoInfo.player_response.videoDetails.lengthSeconds),
-        videoInfo.videoDetails.thumbnails.sort((a, b) => b.width - a.width)[0]?.url,
       );
-      metadata.toFile();
+      metadata.toDb();
       return metadata;
     } catch (error) {
       console.error(new Error(`Error getting video info for id "${videoId}"`, { cause: error }));
-      return null;
     }
   }
 
   static async fromId(videoId: string) {
-    const metadata = Metadata.fromCache(videoId);
+    const metadata = Metadata.fromDb(videoId);
     if (metadata) {
       return metadata;
     }
     return await Metadata.fromYoutube(videoId);
+  }
+
+  get thumbnailUrl() {
+    return `https://i.ytimg.com/vi/${this.videoId}/0.jpg`;
   }
 
   toEmbed() {
@@ -85,7 +79,7 @@ export class Metadata {
         { name: "Channel", value: this.channelName, inline: true },
         { name: "Duration", value: formatSeconds(this.durationSeconds), inline: true },
       ])
-      .setImage(this.thumbnailUrl ?? null);
+      .setImage(this.thumbnailUrl);
   }
 
   toAudio() {

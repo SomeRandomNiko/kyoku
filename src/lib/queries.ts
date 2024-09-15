@@ -1,5 +1,5 @@
 import { TextChannel, type Client } from "discord.js";
-import { inArray, sql } from "drizzle-orm";
+import { eq, inArray, sql } from "drizzle-orm";
 import { db } from "./db.js";
 import * as S from "./schema.js";
 
@@ -72,5 +72,25 @@ export function setTextChannel(guildId: string, channel: TextChannel) {
       },
     })
     .returning()
-    .all()[0];
+    .get();
+}
+
+export function saveMetadata(data: typeof S.songs.$inferInsert) {
+  return db
+    .insert(S.songs)
+    .values(data)
+    .onConflictDoUpdate({
+      target: S.songs.videoId,
+      set: {
+        title: data.title,
+        channelName: data.channelName,
+        durationSeconds: data.durationSeconds,
+      },
+    })
+    .returning()
+    .get();
+}
+
+export function getMetadata(videoId: string) {
+  return db.select().from(S.songs).where(eq(S.songs.videoId, videoId)).get();
 }

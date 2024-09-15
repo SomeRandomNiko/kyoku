@@ -159,11 +159,6 @@ const setupCommand = new MySlashCommandBuilder()
 
     const insertedTextChannel = Q.setTextChannel(interaction.guildId, textchannel);
 
-    if (!insertedTextChannel) {
-      await interaction.editReply({ content: "Error setting up the bot!" });
-      return;
-    }
-
     await interaction.editReply({
       content: `Setup complete! The bot will now send messages to ${channelMention(insertedTextChannel.id)}`,
     });

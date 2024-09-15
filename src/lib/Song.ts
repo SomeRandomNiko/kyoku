@@ -10,11 +10,11 @@ export class Song {
   static async fromId(videoId: string) {
     const metadata = await Metadata.fromId(videoId);
     if (!metadata) {
-      return null;
+      return;
     }
     const audio = await Audio.fromId(videoId);
     if (!audio) {
-      return null;
+      return;
     }
     return new Song(metadata, audio);
   }

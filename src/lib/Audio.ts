@@ -31,16 +31,14 @@ export class Audio {
       return audio;
     } catch (error) {
       console.error(new Error(`Error getting audio for id "${videoId}"`, { cause: error }));
-      return null;
     }
   }
 
   static fromCache(videoId: string) {
     const filepath = Audio.getFilePath(videoId);
-    if (!existsSync(filepath)) {
-      return null;
+    if (existsSync(filepath)) {
+      return new Audio(videoId, readFileSync(filepath));
     }
-    return new Audio(videoId, readFileSync(filepath));
   }
 
   static async fromId(videoId: string) {
