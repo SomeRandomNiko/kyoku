@@ -2,11 +2,21 @@ import { getVoiceConnections } from "@discordjs/voice";
 import { djsClient } from "@lib/client.js";
 import { registeredCommands } from "@lib/commands.js";
 import { env } from "@lib/env.js";
+import * as Q from "@lib/queries.js";
 
 console.log(`Logging in...`);
 
 djsClient.once("ready", djsClient => {
   console.log(`Logged in as ${djsClient.user.tag}!`);
+
+  console.log("Registering guilds...");
+  const registeredGuilds = Q.syncGuilds(djsClient);
+  console.log(`Registered ${registeredGuilds.length} guilds.`);
+
+  console.log("Cleaning up deleted text channels...");
+  const deletedTextChannelsCount = Q.cleanupDeletedTextChannels(djsClient);
+  console.log(`Cleaned up ${deletedTextChannelsCount} text channels.`);
+  console.log("Done.");
 });
 
 djsClient.on("interactionCreate", async interaction => {

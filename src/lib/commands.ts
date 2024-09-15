@@ -1,8 +1,9 @@
 import ytdl from "@distube/ytdl-core";
-import { bold, userMention } from "discord.js";
+import { bold, channelMention, ChannelType, userMention } from "discord.js";
 import { MusicPlayer } from "./MusicPlayer.js";
 import { MySlashCommandBuilder } from "./MySlashCommandBuilder.js";
 import { Song } from "./Song.js";
+import * as Q from "./queries.js";
 
 export const registeredCommands = new Map<string, MySlashCommandBuilder>();
 
@@ -149,3 +150,31 @@ const skipCommand = new MySlashCommandBuilder()
   });
 
 registerCommand(skipCommand);
+
+const setupCommand = new MySlashCommandBuilder()
+  .setName("setup")
+  .setDescription("Setup the bot")
+  .setCallback(async interaction => {
+    const textchannel = interaction.options.getChannel("textchannel", true, [ChannelType.GuildText]);
+
+    const insertedTextChannel = Q.setTextChannel(interaction.guildId, textchannel);
+
+    if (!insertedTextChannel) {
+      await interaction.editReply({ content: "Error setting up the bot!" });
+      return;
+    }
+
+    await interaction.editReply({
+      content: `Setup complete! The bot will now send messages to ${channelMention(insertedTextChannel.id)}`,
+    });
+  });
+
+setupCommand.addChannelOption(option =>
+  option
+    .setName("textchannel")
+    .setDescription("The text channel to send messages to")
+    .addChannelTypes(ChannelType.GuildText)
+    .setRequired(true),
+);
+
+registerCommand(setupCommand);
